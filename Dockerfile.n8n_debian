@@ -12,7 +12,7 @@ ENV N8N_SSL_CERT=/opt/hostname.crt
 ENV N8N_PROTOCOL=https
 ENV N8N_PORT=443
 
-VOLUME n8n-debian
+VOLUME n8n-app
 
 
 ENTRYPOINT [ "n8n" ]
