@@ -36,4 +36,4 @@ ansible-playbook deploy_docker-compose.yml -e "@vars_deploy_n8n.yml" -i inventor
 
 # deploy nginx
 
-ansible-playbook -i hosts_vagrant --limit debian11-test deploy-test.yml
+ansible-playbook -i inventory_default -e "@vars_deploy_n8n_default.yml" deploy_docker-compose.yml
