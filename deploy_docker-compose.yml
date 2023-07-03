@@ -1,0 +1,24 @@
+---
+- hosts: vps
+  become: yes
+  vars:
+    certbot_install_method: package
+    certbot_auto_renew: true
+    certbot_auto_renew_user: "root"
+    certbot_auto_renew_hour: "3"
+    certbot_auto_renew_minute: "30"
+    certbot_auto_renew_options: "--quiet --no-self-upgrade"
+    certbot_create_method: standalone
+    certbot_dir: /opt/certbot
+    nginx_custom_template: nginx-config-n8n.j2
+  roles:
+    - name: geerlingguy.certbot
+      when: certbot_certs is defined
+    - name: certbot-generate
+      when: certbot_email is defined and certbot_domain is defined
+    - name: docker
+      when: n8n is defined
+    - name: n8n-docker-compose
+      when: n8n is defined
+    - name: nginx-install
+    - name: nginx

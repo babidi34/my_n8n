@@ -28,3 +28,12 @@ docker-compose down -v
 
 docker build -f Dockerfile.n8n_debian -t n8n-debian-image .
 docker-compose up -d
+
+# deploy docker-compose via ansible
+
+ansible-playbook deploy_docker-compose.yml -e "@vars_deploy_n8n.yml" -i inventory
+
+
+# deploy nginx
+
+ansible-playbook -i hosts_vagrant --limit debian11-test deploy-test.yml

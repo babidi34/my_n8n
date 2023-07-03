@@ -1,0 +1,32 @@
+---
+certbot_domain: mon-domaine.fr 
+certbot_email: mon.mail@gmail.com
+cert_crt_name: "{{ certbot_domain }}.crt"
+cert_pkey_name: "{{ certbot_domain }}.key"
+n8n: true
+n8n_directory: /opt/n8n_docker-compose
+n8n_dockerfile_name: Dockerfile.n8n_debian
+n8n_docker_image: n8n-debian-image
+N8N_BASIC_AUTH_ACTIVE: true
+N8N_BASIC_AUTH_USER: user-test
+N8N_BASIC_AUTH_PASSWORD: mon-petit-password1234
+N8N_PROTOCOL: https
+N8N_PORT: 5678
+N8N_HOST: "{{ certbot_domain }}"
+WEBHOOK_TUNNEL_URL: "https://{{ certbot_domain }}/"
+DB_TYPE: postgresdb
+DB_POSTGRESDB_HOST: postgres
+DB_POSTGRESDB_DATABASE: n8n
+DB_POSTGRESDB_USER: n8n
+DB_POSTGRESDB_PASSWORD: pass-db-1234
+POSTGRES_USER: n8n
+POSTGRES_PASSWORD: pass-db-1234
+POSTGRES_DB: n8n
+nginx_server_name: "{{ certbot_domain }}"
+nginx_listen_port: 443
+nginx_ssl_enabled: true
+nginx_ssl_certificate: "/etc/ssl/certs/{{ cert_crt_name }}"
+nginx_ssl_certificate_key: "/etc/ssl/private/{{ cert_pkey_name }}"
+nginx_reverse_proxy_enabled: true
+nginx_reverse_proxy_target: "https://localhost:5678"
+#backup_sql: db_backup_n8n_date_du_jour.sql
