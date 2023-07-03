@@ -1,5 +1,5 @@
 ---
-- hosts: vps
+- hosts: all
   become: yes
   vars:
     certbot_install_method: package
@@ -17,8 +17,6 @@
     - name: certbot-generate
       when: certbot_email is defined and certbot_domain is defined
     - name: docker
-      when: n8n is defined
     - name: n8n-docker-compose
-      when: n8n is defined
     - name: nginx-install
     - name: nginx
