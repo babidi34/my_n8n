@@ -37,3 +37,7 @@ ansible-playbook deploy_docker-compose.yml -e "@vars_deploy_n8n.yml" -i inventor
 # deploy nginx
 
 ansible-playbook -i inventory_default -e "@vars_deploy_n8n_default.yml" deploy_docker-compose.yml
+
+# add var env for n8n
+
+ansible-playbook add_var_env.yml -i inventory
