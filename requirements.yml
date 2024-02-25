@@ -1,4 +1,7 @@
 ---
+- name: secure-os
+  src: https://gitlab.com/linux-man-agences-web/ansible-role-secure-os
+  scm: git
 - src: https://github.com/geerlingguy/ansible-role-certbot.git
   name: geerlingguy.certbot
   scm: git

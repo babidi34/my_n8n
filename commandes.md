@@ -31,7 +31,7 @@ docker-compose up -d
 
 # deploy docker-compose via ansible
 
-ansible-playbook deploy_docker-compose.yml -e "@vars_deploy_n8n.yml" -i inventory
+ansible-playbook deploy_docker-compose.yml -i inventory
 
 
 # deploy nginx
