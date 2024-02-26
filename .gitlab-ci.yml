@@ -19,6 +19,7 @@ deploy_infra:
     - cd lm-infra
     - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
     - echo "$SECRETS_INFRA_LM_FILE" > secrets_infra_lm.yml
+    - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
     - ansible-playbook playbooks/playbook_test.yml -i inventory.ini --vault-password-file .vault_pass.txt
