@@ -18,7 +18,7 @@ deploy_infra:
     - git clone -b dev_backup git@gitlab.com:linux-man/lm-infra.git
     - cd lm-infra
     - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
-    - echo "$SECRETS_INFRA_LM_FILE" > secrets_infra_lm.yml
+    - echo "$SECRETS_INFRA_LM_FILE" > secrets-infra-lm.yml
     - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
