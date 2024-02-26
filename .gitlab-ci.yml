@@ -22,6 +22,6 @@ deploy_infra:
     - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
-    - ansible-playbook playbooks/deploy_n8n.yml -i inventory.ini -e ansible_user=gitlab-ci --vault-password-file .vault_pass.txt
+    - ansible-playbook playbooks/deploy_n8n.yml -i inventory.ini -e ansible_user=gitlab-ci --vault-password-file .vault_pass.txt -vvv
   only:
     - master
