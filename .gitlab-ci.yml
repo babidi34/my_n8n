@@ -8,13 +8,14 @@ deploy_infra:
     # Configurer SSH pour utiliser la clé privée
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY_LM_INFRA" | tr -d '\r' | ssh-add -
+    - echo "$SSH_PRIVATE_KEY_GITLAB" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "StrictHostKeyChecking no" > ~/.ssh/config
     - chmod 644 ~/.ssh/config
 
     - apk add git
-    - git clone -b dev_backup https://gitlab.com/linux-man/lm-infra.git
+    - git clone -b dev_backup git@gitlab.com:linux-man/lm-infra.git
     - cd lm-infra
     - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
     - echo "$SECRETS_INFRA_LM_FILE" > secrets_infra_lm.yml
