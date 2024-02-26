@@ -23,9 +23,5 @@ deploy_infra:
     - ansible-galaxy install -r requirements.yml
   script:
     - ansible-playbook playbooks/playbook_test.yml -i inventory.ini --vault-password-file .vault_pass.txt
-  artifacts:
-    paths:
-      - .vault_pass.txt
-    expire_in: 1 day
   only:
     - master
