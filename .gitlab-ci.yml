@@ -1,0 +1,29 @@
+stages:
+  - deploy
+
+deploy_infra:
+  stage: deploy
+  image: ansible/container-conductor-alpine-3.4:0.9.3rc4
+  before_script:
+    # Configurer SSH pour utiliser la clé privée
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY_LM_INFRA" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "StrictHostKeyChecking no" > ~/.ssh/config
+    - chmod 644 ~/.ssh/config
+
+    - apk install git
+    - git clone -b dev_backup https://gitlab.com/linux-man/lm-infra.git
+    - cd lm-infra
+    - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
+    - echo "$SECRETS_INFRA_LM_FILE" > secrets_infra_lm.yml
+    - ansible-galaxy install -r requirements.yml
+  script:
+    - ansible-playbook playbooks/playbook_test.yml -i inventory.ini --vault-password-file .vault_pass.txt
+  artifacts:
+    paths:
+      - .vault_pass.txt
+    expire_in: 1 day
+  only:
+    - master
