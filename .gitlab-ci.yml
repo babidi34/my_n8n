@@ -5,6 +5,7 @@ deploy_infra:
   stage: deploy
   image: debian:bullseye-20240211
   before_script:
+    - apt update -y && apt install git ssh python3 python3-pip -y
     # Configurer SSH pour utiliser la clé privée
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY_LM_INFRA" | tr -d '\r' | ssh-add -
@@ -14,7 +15,6 @@ deploy_infra:
     - echo "StrictHostKeyChecking no" > ~/.ssh/config
     - chmod 644 ~/.ssh/config
 
-    - apt install git ssh python3 python3-pip
     - git clone -b dev_backup git@gitlab.com:linux-man/lm-infra.git
     - cd lm-infra
     - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
