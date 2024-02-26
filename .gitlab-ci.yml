@@ -13,7 +13,7 @@ deploy_infra:
     - echo "StrictHostKeyChecking no" > ~/.ssh/config
     - chmod 644 ~/.ssh/config
 
-    - apk install git
+    - apk add git
     - git clone -b dev_backup https://gitlab.com/linux-man/lm-infra.git
     - cd lm-infra
     - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
