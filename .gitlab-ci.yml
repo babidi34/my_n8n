@@ -16,7 +16,7 @@ deploy_infra:
     - chmod 600 ~/.ssh/id_gitlabci
     - echo "$SSH_PRIVATE_KEY_GITLAB" | tr -d '\r' | ssh-add -
 
-    - git clone -b dev_backup git@gitlab.com:linux-man/lm-infra.git
+    - git clone -b master git@gitlab.com:linux-man/lm-infra.git
     - cd lm-infra
     - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .env
     - echo "$SECRETS_INFRA_LM_FILE" > secrets-infra-lm.yml
