@@ -7,21 +7,22 @@ deploy_infra:
   before_script:
     - apt update -y && apt install git ssh python3 python3-pip -y
     # Configurer SSH pour utiliser la clé privée
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY_LM_INFRA" | tr -d '\r' | ssh-add -
-    - echo "$SSH_PRIVATE_KEY_GITLAB" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "StrictHostKeyChecking no" > ~/.ssh/config
     - chmod 644 ~/.ssh/config
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY_LM_INFRA" > ~/.ssh/id_gitlabci
+    - chmod 600 ~/.ssh/id_gitlabci
+    - echo "$SSH_PRIVATE_KEY_GITLAB" | tr -d '\r' | ssh-add -
 
     - git clone -b dev_backup git@gitlab.com:linux-man/lm-infra.git
     - cd lm-infra
-    - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .vault_pass.txt
+    - echo "$ANSIBLE_VAULT_PASSWORD_FILE" > .env
     - echo "$SECRETS_INFRA_LM_FILE" > secrets-infra-lm.yml
     - pip install -r requirements.txt
     - ansible-galaxy install -r requirements.yml
   script:
-    - ansible-playbook playbooks/deploy_n8n.yml -i inventory.ini -e ansible_user=gitlab-ci --vault-password-file .vault_pass.txt -vvv
+    - ansible-playbook playbooks/deploy_n8n.yml -i inventory.ini -e ansible_user=gitlab-ci -e ansible_ssh_private_key_file=~/.ssh/id_gitlabci --vault-password-file .env
   only:
     - master
